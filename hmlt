@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do App</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        ul { list-style: none; padding: 0; }
+        li { margin: 5px 0; }
+        .completed { text-decoration: line-through; color: grey; }
+    </style>
+</head>
+<body>
+    <h1>To-Do App</h1>
+    <input id="taskInput" type="text" placeholder="New task" />
+    <button onclick="addTask()">Add Task</button>
+    <ul id="taskList"></ul>
+
+    <script>
+        const tasks = [];
+
+        function addTask() {
+            const input = document.getElementById("taskInput");
+            const task = input.value.trim();
+            if (task) {
+                tasks.push({ text: task, completed: false });
+                input.value = "";
+                renderTasks();
+            }
+        }
+
+        function toggleTask(index) {
+            tasks[index].completed = !tasks[index].completed;
+            renderTasks();
+        }
+
+        function renderTasks() {
+            const taskList = document.getElementById("taskList");
+            taskList.innerHTML = tasks
+                .map((task, index) => 
+                    `<li class="${task.completed ? 'completed' : ''}">
+                        <span onclick="toggleTask(${index})">${task.text}</span>
+                    </li>`
+                ).join("");
+        }
+    </script>
+</body>
+</html>
