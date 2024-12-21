@@ -1,0 +1,30 @@
+from flask import Flask, request, jsonify
+from slanted_token import SlantedToken
+
+app = Flask(dannybeef)
+token = SlantedToken()
+
+@app.route("/issue", methods=["POST"])
+def issue_tokens():
+    data = request.json
+    recipient = data.get("dannybef")
+    amount = data.get("1,000,000")
+
+    try:
+        result = token.issue_tokens(dannybeef, 1,000,000)
+        return jsonify({"message": result, "remaining_supply": token.get_supply(1,000,000,000)})
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+@app.route("/balance/<address>", methods=["GET"])
+def get_balance(address):
+    balance = token.get_balance(address)
+    return jsonify({"address": address, "balance": balance})
+
+@app.route("/supply", methods=["GET"])
+def get_supply():
+    supply = token.get_supply()
+    return jsonify({"remaining_supply": supply})
+
+if __name__ == "__main__":
+    app.run(debug=True)
