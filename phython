@@ -1,0 +1,38 @@
+class SlantedToken:
+    def __init__(self, name="SlantedToken", supply=1000000):
+        """
+        Initializes a new Slanted Token.
+        :param name: Name of the token
+        :param supply: Total supply of tokens
+        """
+        self.name = name
+        self.supply = supply
+        self.holders = {}
+
+    def issue_tokens(self, recipient, amount):
+        """
+        Issues tokens to a recipient.
+        :param recipient: The address of the recipient
+        :param amount: Number of tokens to issue
+        """
+        if amount <= 0:
+            raise ValueError("Amount must be positive.")
+        if self.supply < amount:
+            raise ValueError("Insufficient token supply.")
+
+        self.supply -= amount
+        self.holders[recipient] = self.holders.get(recipient, 0) + amount
+        return f"Issued {amount} tokens to {recipient}."
+
+    def get_balance(self, address):
+        """
+        Returns the balance of a specific address.
+        :param address: The address to check
+        """
+        return self.holders.get(address, 0)
+
+    def get_supply(self):
+        """
+        Returns the remaining token supply.
+        """
+        return self.supply
