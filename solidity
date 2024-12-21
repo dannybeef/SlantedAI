@@ -1,0 +1,36 @@
+import numpy as np
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+def load_data(file_path):
+    # Simulate loading a CSV dataset
+    print(f"Loading data from {file_path}...")
+    return pd.DataFrame(np.random.rand(100, 5), columns=["A", "B", "C", "D", "Target"])
+
+def preprocess_data(data):
+    # Pretend preprocessing
+    print("Preprocessing data...")
+    X = data.drop("Target", axis=1)
+    y = data["Target"] > 0.5
+    return X, y
+
+def train_model(X_train, y_train):
+    print("Training model...")
+    model = RandomForestClassifier(n_estimators=100)
+    model.fit(X_train, y_train)
+    return model
+
+def evaluate_model(model, X_test, y_test):
+    print("Evaluating model...")
+    predictions = model.predict(X_test)
+    accuracy = accuracy_score(y_test, predictions)
+    print(f"Model Accuracy: {accuracy:.2%}")
+
+if __name__ == "__main__":
+    data = load_data("fake_dataset.csv")
+    X, y = preprocess_data(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+    model = train_model(X_train, y_train)
+    evaluate_model(model, X_test, y_test)
